@@ -9,7 +9,7 @@ description = 'How I built this site with Claude, and what I think about develop
 
 ***NOTE: The statements below were not written with AI, nor was AI used at any point for proofreading or writing.***
 
-This site was built with Claude code using Hugo. The majority of the site came to be based on my initial prompt below:
+This site was built with Claude code using Hugo. It is hosted on GitHub pages configured with an auto build and deployment workflow as well as a custom domain setup. You can view the repository [here](https://github.com/ttse76/tmt-site). The majority of the site came to be based on my initial prompt below:
 
 {{< prompt title="Initial prompt" >}}
 Build a site with Hugo that will serve as my online resume. I want it to have a title page with my name, an intro that I will write, and some basic info:
