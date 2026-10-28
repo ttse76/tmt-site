@@ -1,0 +1,21 @@
+{{ define "main" }}
+<section class="page-head">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="container">
+    <h1 class="page-title reveal" style="--d: 0">{{ .Title }}</h1>
+    {{- with .Content }}
+    <div class="page-lede prose reveal" style="--d: 1">{{ . }}</div>
+    {{- end }}
+  </div>
+</section>
+
+<section class="section section--flush-top">
+  <div class="container">
+    <ul class="link-list" role="list">
+      {{- range .Pages }}
+      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+      {{- end }}
+    </ul>
+  </div>
+</section>
+{{ end }}

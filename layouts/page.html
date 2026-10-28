@@ -1,0 +1,20 @@
+{{ define "main" }}
+<section class="page-head">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="container">
+    {{- with .Params.eyebrow }}
+    <p class="eyebrow reveal" style="--d: 0">{{ . }}</p>
+    {{- end }}
+    <h1 class="page-title reveal" style="--d: 1">{{ .Title }}</h1>
+    {{- with .Description }}
+    <p class="page-lede reveal" style="--d: 2">{{ . }}</p>
+    {{- end }}
+  </div>
+</section>
+
+<section class="section section--flush-top">
+  <div class="container">
+    <article class="prose prose--page reveal" style="--d: 3">{{ .Content }}</article>
+  </div>
+</section>
+{{ end }}

@@ -1,0 +1,25 @@
+baseURL = 'https://timothymtse.com/'
+locale = 'en-us'
+title = 'Timothy M. Tse'
+disableKinds = ['taxonomy', 'term', 'rss']
+
+[params]
+  initials = 'TT'
+  description = 'Timothy M. Tse is a full stack software engineer based in Northern New Jersey.'
+
+  [params.social]
+    linkedin = 'https://www.linkedin.com/in/ttse76'
+
+[menus]
+  [[menus.main]]
+    name = 'Home'
+    pageRef = '/'
+    weight = 10
+  [[menus.main]]
+    name = 'Experience'
+    pageRef = '/experience'
+    weight = 20
+  [[menus.main]]
+    name = 'About This Site'
+    pageRef = '/about-this-site'
+    weight = 30

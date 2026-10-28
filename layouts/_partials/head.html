@@ -1,0 +1,45 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{{- $title := printf "%s · %s" .Title site.Title }}
+{{- if .IsHome }}
+  {{- $title = site.Title }}
+  {{- with .Params.role }}{{ $title = printf "%s · %s" site.Title . }}{{ end }}
+{{- end }}
+{{- $description := or .Description .Params.tagline site.Params.description }}
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $description }}">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5faf7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#08110d" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ .Permalink }}">
+<link rel="canonical" href="{{ .Permalink }}">
+<link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+
+{{- /* Runs before first paint so the theme and page transition never flash. */}}
+<script>
+  (function () {
+    var root = document.documentElement;
+    var theme = null;
+    try { theme = localStorage.getItem('theme'); } catch (e) {}
+    if (theme !== 'light' && theme !== 'dark') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    root.setAttribute('data-theme', theme);
+    root.classList.add('js');
+    try {
+      if (sessionStorage.getItem('page-transition')) {
+        sessionStorage.removeItem('page-transition');
+        root.classList.add('is-entering');
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@500;600;700&display=swap">
+{{- $css := resources.Get "css/main.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">

@@ -1,0 +1,11 @@
+{{ define "main" }}
+<section class="page-head page-head--center">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="container">
+    <p class="eyebrow reveal" style="--d: 0">404</p>
+    <h1 class="page-title reveal" style="--d: 1">Page not found</h1>
+    <p class="page-lede reveal" style="--d: 2">The page you're looking for doesn't exist or has moved.</p>
+    <p class="reveal" style="--d: 3"><a class="btn btn--primary" href="{{ "/" | relURL }}">Back home {{ partial "icon.html" "arrow-right" }}</a></p>
+  </div>
+</section>
+{{ end }}

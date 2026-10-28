@@ -1,0 +1,73 @@
+{{ define "main" }}
+<section class="page-head">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="container">
+    <p class="eyebrow reveal" style="--d: 0">Career</p>
+    <h1 class="page-title reveal" style="--d: 1">{{ .Title }}</h1>
+    {{- with .Content }}
+    <div class="page-lede prose reveal" style="--d: 2">{{ . }}</div>
+    {{- end }}
+  </div>
+</section>
+
+<section class="section section--flush-top">
+  <div class="container">
+    <ol class="timeline" role="list">
+      {{- range $i, $job := (.Pages.ByParam "startDate").Reverse }}
+        {{- $start := time.AsTime .Params.startDate }}
+        {{- $isCurrent := not .Params.endDate }}
+      <li class="timeline__item reveal{{ if $isCurrent }} is-current{{ end }}" style="--d: {{ add $i 2 }}">
+        <p class="timeline__when">
+          <time datetime="{{ $start.Format "2006-01" }}">{{ $start.Year }}</time>
+          –
+          {{- with .Params.endDate }}
+            {{- $end := time.AsTime . }}
+          <time datetime="{{ $end.Format "2006-01" }}">{{ $end.Year }}</time>
+          {{- else }}
+          Present
+          {{- end }}
+        </p>
+        <span class="timeline__marker" aria-hidden="true"></span>
+        <article class="timeline__card card">
+          <header class="timeline__header">
+            <div>
+              <h2 class="timeline__role">{{ .Title }}</h2>
+              <p class="timeline__company">{{ .Params.company }}</p>
+              {{- if or .Params.location .Params.isRemote }}
+              <p class="timeline__location">
+                {{ partial "icon.html" "map-pin" }}
+                <span>
+                  {{- with .Params.location }}{{ . }}{{ if $job.Params.isRemote }} <span class="timeline__remote">(Remote)</span>{{ end }}
+                  {{- else }}Remote{{ end -}}
+                </span>
+              </p>
+              {{- end }}
+            </div>
+            {{- if $isCurrent }}
+            <span class="badge">Current</span>
+            {{- end }}
+          </header>
+          {{- with .Content }}
+          <div class="timeline__summary prose">{{ . }}</div>
+          {{- else }}
+            {{- if hugo.IsServer }}
+          <p class="placeholder">Add a summary below the front matter in <code>content/{{ replace $job.File.Path "\\" "/" }}</code>. (Only shows while running <code>hugo server</code>.)</p>
+            {{- end }}
+          {{- end }}
+          {{- with .Params.skills }}
+          <div class="timeline__skills">
+            <h3 class="timeline__skills-title">Skills &amp; tools</h3>
+            <ul class="chips" role="list">
+              {{- range . }}
+              <li class="chip">{{ . }}</li>
+              {{- end }}
+            </ul>
+          </div>
+          {{- end }}
+        </article>
+      </li>
+      {{- end }}
+    </ol>
+  </div>
+</section>
+{{ end }}

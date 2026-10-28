@@ -1,0 +1,22 @@
+{{- /*
+  Highlights a prompt exactly as it was typed (line breaks kept, no Markdown).
+  Usage:
+    {{< prompt title="Initial prompt" attachment="Profile.pdf" >}}
+    ...prompt text...
+    {{< /prompt >}}
+*/ -}}
+<figure class="prompt">
+  <figcaption class="prompt__header">
+    {{ partial "icon.html" "terminal" }}
+    <span class="prompt__title">{{ .Get "title" | default "Prompt" }}</span>
+    <button class="prompt__copy" type="button" data-copy>
+      <span class="prompt__copy-icon prompt__copy-icon--copy">{{ partial "icon.html" "copy" }}</span>
+      <span class="prompt__copy-icon prompt__copy-icon--done">{{ partial "icon.html" "check" }}</span>
+      <span class="prompt__copy-label">Copy</span>
+    </button>
+  </figcaption>
+  <div class="prompt__text">{{ .Inner | strings.TrimSpace }}</div>
+  {{- with .Get "attachment" }}
+  <p class="prompt__attachment">{{ partial "icon.html" "paperclip" }}<span>{{ . }}</span></p>
+  {{- end }}
+</figure>

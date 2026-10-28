@@ -1,0 +1,88 @@
+{{ define "main" }}
+{{- $words := split site.Title " " }}
+{{- $count := len $words }}
+{{- $lastName := index $words (sub $count 1) }}
+{{- $leading := delimit (first (sub $count 1) $words) " " }}
+{{- $experience := site.GetPage "/experience" }}
+
+<section class="hero">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="dot-grid" aria-hidden="true"></div>
+  <div class="container hero__inner">
+    {{- with .Params.role }}
+    <p class="pill reveal" style="--d: 0"><span class="pill__dot" aria-hidden="true"></span>{{ . }}</p>
+    {{- end }}
+    <h1 class="hero__name reveal" style="--d: 1">{{ with $leading }}{{ . }} {{ end }}<span class="text-gradient">{{ $lastName }}</span></h1>
+    {{- with .Params.tagline }}
+    <p class="hero__tagline reveal" style="--d: 2">{{ . }}</p>
+    {{- end }}
+    <div class="hero__actions reveal" style="--d: 3">
+      {{- with $experience }}
+      <a class="btn btn--primary" href="{{ .RelPermalink }}">View experience {{ partial "icon.html" "arrow-right" }}</a>
+      {{- end }}
+      {{ partial "social-links.html" . }}
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="about-title">
+  <div class="container about">
+    <div class="about__intro reveal" style="--d: 4">
+      <h2 class="section-title" id="about-title"><span class="section-title__index">01</span>About</h2>
+      {{- with .Content }}
+      <div class="prose">{{ . }}</div>
+      {{- else }}
+        {{- if hugo.IsServer }}
+      <p class="placeholder">Write your intro below the front matter in <code>content/_index.md</code> and it will appear here. (This note only shows while running <code>hugo server</code>.)</p>
+        {{- end }}
+      {{- end }}
+    </div>
+
+    <aside class="facts card reveal" style="--d: 5" aria-labelledby="facts-title">
+      <h2 class="facts__title" id="facts-title">At a glance</h2>
+
+      {{- with .Params.location }}
+      <div class="fact">
+        <span class="fact__icon">{{ partial "icon.html" "map-pin" }}</span>
+        <div class="fact__body">
+          <h3 class="fact__label">Location</h3>
+          <p class="fact__value">{{ . }}</p>
+        </div>
+      </div>
+      {{- end }}
+
+      {{- with $experience }}
+        {{- range first 1 (.Pages.ByParam "startDate").Reverse }}
+          {{- if not .Params.endDate }}
+      <div class="fact fact--teal">
+        <span class="fact__icon">{{ partial "icon.html" "briefcase" }}</span>
+        <div class="fact__body">
+          <h3 class="fact__label">Currently</h3>
+          <p class="fact__value">{{ .Title }}</p>
+          <p class="fact__meta">{{ .Params.company }}</p>
+        </div>
+      </div>
+          {{- end }}
+        {{- end }}
+      {{- end }}
+
+      {{- with .Params.education }}
+      <div class="fact fact--lime">
+        <span class="fact__icon">{{ partial "icon.html" "graduation-cap" }}</span>
+        <div class="fact__body">
+          <h3 class="fact__label">Education</h3>
+          <ul class="edu" role="list">
+            {{- range . }}
+            <li class="edu__item">
+              <p class="fact__value">{{ .school }}</p>
+              <p class="fact__meta">{{ .degree }}{{ with .years }} · {{ . }}{{ end }}</p>
+            </li>
+            {{- end }}
+          </ul>
+        </div>
+      </div>
+      {{- end }}
+    </aside>
+  </div>
+</section>
+{{ end }}

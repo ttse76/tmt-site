@@ -1,0 +1,4 @@
+{{- /* A writing reminder that only renders under `hugo server`. */ -}}
+{{- if hugo.IsServer }}
+<p class="placeholder">{{ .Inner | strings.TrimSpace }}</p>
+{{- end }}

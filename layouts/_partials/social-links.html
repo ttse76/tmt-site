@@ -1,0 +1,13 @@
+{{- with site.Params.social }}
+<ul class="social" role="list">
+  {{- with .linkedin }}
+  <li><a class="icon-btn" href="{{ . }}" target="_blank" rel="noopener" aria-label="LinkedIn">{{ partial "icon.html" "linkedin" }}</a></li>
+  {{- end }}
+  {{- with .github }}
+  <li><a class="icon-btn" href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub">{{ partial "icon.html" "github" }}</a></li>
+  {{- end }}
+  {{- with .email }}
+  <li><a class="icon-btn" href="mailto:{{ . }}" aria-label="Email">{{ partial "icon.html" "mail" }}</a></li>
+  {{- end }}
+</ul>
+{{- end }}

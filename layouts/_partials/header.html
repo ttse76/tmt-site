@@ -1,0 +1,25 @@
+{{- $current := . }}
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href="{{ "/" | relURL }}" aria-label="{{ site.Title }}, home">
+      <span class="brand__mark" aria-hidden="true">{{ site.Params.initials }}</span>
+      <span class="brand__name">{{ site.Title }}</span>
+    </a>
+    <div class="site-header__actions">
+      <nav class="nav" id="site-nav" aria-label="Primary">
+        {{- range site.Menus.main }}
+          {{- $active := or ($current.IsMenuCurrent "main" .) (eq $current.RelPermalink .URL) (and (ne .URL "/") (strings.HasPrefix $current.RelPermalink .URL)) }}
+          <a class="nav__link" href="{{ .URL }}"{{ if $active }} aria-current="page"{{ end }}>{{ .Name }}</a>
+        {{- end }}
+      </nav>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle color theme">
+        <span class="theme-toggle__icon theme-toggle__icon--moon">{{ partial "icon.html" "moon" }}</span>
+        <span class="theme-toggle__icon theme-toggle__icon--sun">{{ partial "icon.html" "sun" }}</span>
+      </button>
+      <button class="menu-toggle" type="button" data-menu-toggle aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+        <span class="menu-toggle__icon menu-toggle__icon--open">{{ partial "icon.html" "menu" }}</span>
+        <span class="menu-toggle__icon menu-toggle__icon--close">{{ partial "icon.html" "x" }}</span>
+      </button>
+    </div>
+  </div>
+</header>
